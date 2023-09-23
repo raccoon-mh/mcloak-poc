@@ -65,6 +65,11 @@ func App() *buffalo.App {
 
 		app.GET("/", HomeHandler)
 
+		kc := app.Group("/mcloak")
+		kc.GET("/home", KcHomeHandler) // /mcloak/home
+		kc.GET("/login", KcLoginHandler)
+		kc.GET("/createuser", KcCreateUserHandler)
+
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	}
 
