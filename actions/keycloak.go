@@ -1,7 +1,6 @@
 package actions
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"os"
@@ -11,22 +10,21 @@ import (
 	"github.com/Nerzal/gocloak/v13"
 )
 
-// HomeHandler is a default handler to serve up
-// a home page.
+var KC_admin = os.Getenv("KC_admin")
+var KC_passwd = os.Getenv("KC_passwd")
+var KC_uri = os.Getenv("KC_uri")
+var KC_clientID = os.Getenv("KC_clientID")
+var KC_clientSecret = os.Getenv("KC_clientSecret")
+var KC_realm = os.Getenv("KC_realm")
+var KC_client = gocloak.NewClient(KC_uri)
+
 func KcHomeHandler(c buffalo.Context) error {
 	c.Set("simplestr", "welcome mcloak home!")
 	return c.Render(http.StatusOK, r.HTML("kctest/index.html"))
 }
 
 func KcCreateUserHandler(c buffalo.Context) error {
-	var KC_admin = os.Getenv("KC_admin")
-	var KC_passwd = os.Getenv("KC_passwd")
-	var KC_uri = os.Getenv("KC_uri")
-	// fmt.Println("KC ENV :", KC_admin, KC_passwd, KC_uri)
-
-	client := gocloak.NewClient(KC_uri)
-	ctx := context.Background()
-	token, err := client.LoginAdmin(ctx, KC_admin, KC_passwd, "master")
+	token, err := KC_client.LoginAdmin(c, KC_admin, KC_passwd, "master")
 	if err != nil {
 		c.Set("simplestr", err.Error()+"### Something wrong with the credentials or url ###")
 		return c.Render(http.StatusOK, r.HTML("kctest/index.html"))
@@ -43,7 +41,7 @@ func KcCreateUserHandler(c buffalo.Context) error {
 		Username:  gocloak.StringP("raccoon"),
 	}
 
-	_, err = client.CreateUser(ctx, token.AccessToken, "master", user)
+	_, err = KC_client.CreateUser(c, token.AccessToken, "master", user)
 	if err != nil {
 		c.Set("simplestr", err.Error()+"### Oh no!, failed to create user :( ###")
 		return c.Render(http.StatusOK, r.HTML("kctest/index.html"))
@@ -54,19 +52,11 @@ func KcCreateUserHandler(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("kctest/index.html"))
 }
 
-func KcLoginHandler(c buffalo.Context) error {
-	var KC_admin = os.Getenv("KC_admin")
-	var KC_passwd = os.Getenv("KC_passwd")
-	var KC_uri = os.Getenv("KC_uri")
-	// fmt.Println("KC ENV :", KC_admin, KC_passwd, KC_uri)
-
-	client := gocloak.NewClient(KC_uri)
-	ctx := context.Background()
-	token, err := client.LoginAdmin(ctx, KC_admin, KC_passwd, "master")
+func KcLoginAdminHandler(c buffalo.Context) error {
+	token, err := KC_client.LoginAdmin(c, KC_admin, KC_passwd, "master")
 	if err != nil {
 		c.Set("simplestr", err.Error()+"### Something wrong with the credentials or url ###")
 		return c.Render(http.StatusOK, r.HTML("kctest/index.html"))
-		// panic("Something wrong with the credentials or url")
 	}
 
 	return c.Render(http.StatusOK, r.JSON(token))

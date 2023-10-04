@@ -10,7 +10,6 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo-pop/v3/pop/popmw"
 	"github.com/gobuffalo/envy"
-	csrf "github.com/gobuffalo/mw-csrf"
 	forcessl "github.com/gobuffalo/mw-forcessl"
 	i18n "github.com/gobuffalo/mw-i18n/v2"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
@@ -54,7 +53,7 @@ func App() *buffalo.App {
 
 		// Protect against CSRF attacks. https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
 		// Remove to disable this.
-		app.Use(csrf.New)
+		// app.Use(csrf.New)
 
 		// Wraps each request in a transaction.
 		//   c.Value("tx").(*pop.Connection)
@@ -63,12 +62,20 @@ func App() *buffalo.App {
 		// Setup and use translations:
 		app.Use(translations())
 
-		app.GET("/", HomeHandler)
+		// kc := app.Group("/mcloak")
+		// kc.GET("/home", KcHomeHandler) // /mcloak/home
+		// kc.GET("/login", KcLoginHandler)
+		// kc.GET("/createuser", KcCreateUserHandler)
 
-		kc := app.Group("/mcloak")
-		kc.GET("/home", KcHomeHandler) // /mcloak/home
-		kc.GET("/login", KcLoginHandler)
-		kc.GET("/createuser", KcCreateUserHandler)
+		bf := app.Group("/buffalo")
+		bf.Use(IsAuth)
+		bf.Middleware.Skip(IsAuth, LoginHandler, NotAuthUserTestPageHandler)
+		bf.GET("/login", LoginHandler)
+		bf.POST("/login", LoginHandler)
+		bf.GET("/authuser/not", NotAuthUserTestPageHandler)
+
+		bf.GET("/", HomeHandler)
+		bf.GET("/authuser", AuthUserTestPageHandler)
 
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	}
