@@ -77,7 +77,8 @@ func App() *buffalo.App {
 		bf.GET("/", HomeHandler)
 		bf.GET("/authuser", AuthUserTestPageHandler)
 
-		app.ANY("/saml", Testsaml)
+		app.GET("/saml/aws", AwsSamlSTSKey)
+		app.GET("/saml/ali", AliSamlSTSKey)
 
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	}

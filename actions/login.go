@@ -3,12 +3,8 @@ package actions
 import (
 	"fmt"
 	"net/http"
-	"os"
-	"time"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/versent/saml2aws/v2/pkg/cfg"
-	"github.com/versent/saml2aws/v2/pkg/creds"
 )
 
 // HomeHandler is a default handler to serve up
@@ -49,39 +45,39 @@ func NotAuthUserTestPageHandler(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("simplestr.html"))
 }
 
-func Testsaml(c buffalo.Context) error {
+// func Testsaml(c buffalo.Context) error {
 
-	account := &cfg.IDPAccount{
-		URL:                  os.Getenv("SAML_IDP_Initiated_URL"),
-		Username:             os.Getenv("SAML_user"),
-		Provider:             "KeyCloak",
-		MFA:                  "Auto",
-		SkipVerify:           false,
-		AmazonWebservicesURN: "urn:amazon:webservices",
-		SessionDuration:      900,
-		Profile:              "saml",
-		RoleARN:              "",
-		Region:               "",
-	}
+// 	account := &cfg.IDPAccount{
+// 		URL:                  os.Getenv("SAML_IDP_Initiated_URL"),
+// 		Username:             os.Getenv("SAML_user"),
+// 		Provider:             "KeyCloak",
+// 		MFA:                  "Auto",
+// 		SkipVerify:           false,
+// 		AmazonWebservicesURN: "urn:amazon:webservices",
+// 		SessionDuration:      900,
+// 		Profile:              "saml",
+// 		RoleARN:              "",
+// 		Region:               "",
+// 	}
 
-	loginDetails := &creds.LoginDetails{
-		URL:          account.URL,
-		Username:     account.Username,
-		Password:     os.Getenv("SAML_password"),
-		MFAToken:     "",
-		DuoMFAOption: "",
-	}
+// 	loginDetails := &creds.LoginDetails{
+// 		URL:          account.URL,
+// 		Username:     account.Username,
+// 		Password:     os.Getenv("SAML_password"),
+// 		MFAToken:     "",
+// 		DuoMFAOption: "",
+// 	}
 
-	cred, err := Login(account, loginDetails)
-	if err != nil {
-		return c.Render(http.StatusOK, r.JSON(err.Error()))
-	}
+// 	cred, err := Login(account, loginDetails)
+// 	if err != nil {
+// 		return c.Render(http.StatusOK, r.JSON(err.Error()))
+// 	}
 
-	fmt.Println("########## AWSAccessKey  : ", cred.AWSAccessKey)
-	fmt.Println("########## AWSSecretKey  : ", cred.AWSSecretKey)
-	fmt.Println("########## AWSSecurityToken  : ", cred.AWSSecurityToken)
-	fmt.Println("########## AWSSessionToken  : ", cred.AWSSessionToken)
-	fmt.Println("########## Expires  : ", cred.Expires.Format(time.RFC3339))
+// 	fmt.Println("########## AWSAccessKey  : ", cred.AWSAccessKey)
+// 	fmt.Println("########## AWSSecretKey  : ", cred.AWSSecretKey)
+// 	fmt.Println("########## AWSSecurityToken  : ", cred.AWSSecurityToken)
+// 	fmt.Println("########## AWSSessionToken  : ", cred.AWSSessionToken)
+// 	fmt.Println("########## Expires  : ", cred.Expires.Format(time.RFC3339))
 
-	return c.Render(http.StatusOK, r.JSON("success"))
-}
+// 	return c.Render(http.StatusOK, r.JSON("success"))
+// }
