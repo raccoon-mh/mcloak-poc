@@ -1,8 +1,5 @@
 package keycloak
 
-// saml2aws/pkg/provider/keycloak/keycloak.go
-// 키클락 로그인 관련
-
 import (
 	"bytes"
 	"encoding/base64"
@@ -14,15 +11,16 @@ import (
 	"regexp"
 	"strings"
 
+	"gocloak/util/samlHandler/aws/pkg/cfg"
+	"gocloak/util/samlHandler/aws/pkg/creds"
+	"gocloak/util/samlHandler/aws/pkg/prompter"
+	"gocloak/util/samlHandler/aws/pkg/provider"
+	"gocloak/util/samlHandler/aws/pkg/provider/okta"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/marshallbrekka/go-u2fhost"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"github.com/versent/saml2aws/v2/pkg/cfg"
-	"github.com/versent/saml2aws/v2/pkg/creds"
-	"github.com/versent/saml2aws/v2/pkg/prompter"
-	"github.com/versent/saml2aws/v2/pkg/provider"
-	"github.com/versent/saml2aws/v2/pkg/provider/okta"
 )
 
 var logger = logrus.WithField("provider", "Keycloak")
@@ -433,6 +431,7 @@ func updateOTPFormData(authCtx *authContext, otpForm url.Values, s *goquery.Sele
 			}
 		}
 	}
+
 }
 
 func generateAuthenticatorElementId(authenticatorIndex uint) string {
