@@ -1,22 +1,15 @@
-# Welcome to Buffalo
+# Welcome to mcloak
 
-Thank you for choosing Buffalo for your web development needs.
+- [cb-iam-manager](https://github.com/m-cmp/mc-iam-manager)를 위한 keycloak saml 연동 PoC
+- aws, alibaba, gcp, tencent saml 연동 예정
+- keycloak 별도 서버 필요
 
 ## Database Setup
 
-It looks like you chose to set up your application using a database! Fantastic!
+- Postgres DB 사용 -> 외부 서버
 
-The first thing you need to do is open up the "database.yml" file and edit it to use the correct usernames, passwords, hosts, etc... that are appropriate for your environment.
-
-You will also need to make sure that **you** start/install the database of your choice. Buffalo **won't** install and start it for you.
-
-### Create Your Databases
-
-Ok, so you've edited the "database.yml" file and started your database, now Buffalo can create the databases in that file for you:
-
-```console
-buffalo pop create -a
-```
+  
+# Buffalo framework setting
 
 ## Starting the Application
 
