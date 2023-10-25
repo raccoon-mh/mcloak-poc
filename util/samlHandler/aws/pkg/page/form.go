@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strings"
 
-	"gocloak/util/samlHandler/aws/pkg/provider"
+	"gocloak/util/samlHandler/provider"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/pkg/errors"

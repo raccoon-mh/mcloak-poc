@@ -24,7 +24,7 @@ import (
 	"gocloak/util/samlHandler/aws/pkg/creds"
 	"gocloak/util/samlHandler/aws/pkg/page"
 	"gocloak/util/samlHandler/aws/pkg/prompter"
-	"gocloak/util/samlHandler/aws/pkg/provider"
+	"gocloak/util/samlHandler/provider"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/marshallbrekka/go-u2fhost"

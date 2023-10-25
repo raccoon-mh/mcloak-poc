@@ -6,23 +6,27 @@ import (
 	"log"
 	"os"
 
-	//aws
-	"gocloak/util/samlHandler/alibaba/pkg/alibabacloudconfig"
+	//common
+	"gocloak/util/samlHandler/provider/keycloak"
+
+	// ***** aws *****
 	saml2aws "gocloak/util/samlHandler/aws/pkg"
 	"gocloak/util/samlHandler/aws/pkg/awsconfig"
 	awscfg "gocloak/util/samlHandler/aws/pkg/cfg"
 	awscreds "gocloak/util/samlHandler/aws/pkg/creds"
-	"gocloak/util/samlHandler/aws/pkg/provider/keycloak"
 
+	//aws-sdk
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	awssts "github.com/aws/aws-sdk-go/service/sts"
 
-	//ali
+	// ***** ali *****
 	saml2alibabacloud "gocloak/util/samlHandler/alibaba/pkg"
+	"gocloak/util/samlHandler/alibaba/pkg/alibabacloudconfig"
 	alicfg "gocloak/util/samlHandler/alibaba/pkg/cfg"
 	alicreds "gocloak/util/samlHandler/alibaba/pkg/creds"
 
+	//ali-sdk
 	alists "github.com/aliyun/alibaba-cloud-sdk-go/services/sts"
 
 	"github.com/pkg/errors"

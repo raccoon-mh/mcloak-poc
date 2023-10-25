@@ -5,7 +5,7 @@ import (
 
 	"gocloak/util/samlHandler/aws/pkg/cfg"
 	"gocloak/util/samlHandler/aws/pkg/creds"
-	"gocloak/util/samlHandler/aws/pkg/provider/keycloak"
+	"gocloak/util/samlHandler/provider/keycloak"
 )
 
 // ProviderList list of providers with their MFAs
