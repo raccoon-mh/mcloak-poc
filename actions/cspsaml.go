@@ -8,11 +8,16 @@ import (
 
 	"github.com/gobuffalo/buffalo"
 
+	//common
 	samllogin "gocloak/util/samlHandler"
-	alicfg "gocloak/util/samlHandler/alibaba/pkg/cfg"
-	alicreds "gocloak/util/samlHandler/alibaba/pkg/creds"
+
+	//aws
 	awscfg "gocloak/util/samlHandler/aws/pkg/cfg"
 	awscreds "gocloak/util/samlHandler/aws/pkg/creds"
+
+	//ali
+	alicfg "gocloak/util/samlHandler/alibaba/pkg/cfg"
+	alicreds "gocloak/util/samlHandler/alibaba/pkg/creds"
 )
 
 func AwsSamlSTSKey(c buffalo.Context) error {
